@@ -1,20 +1,25 @@
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
-import cors from "cors";
 import express from "express";
+import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import authorRoutes from "./routes/authorRoutes.js";
 import loanRoutes from "./routes/loanRoutes.js";
 
-const swaggerDocument = YAML.load("./src/swagger.yaml");
-
 const app = express();
-app.use(cors());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 //middleware
 app.use(express.json());
+
+const swaggerDocument = YAML.load("./src/swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //routes
 app.use("/api/auth", authRoutes);
