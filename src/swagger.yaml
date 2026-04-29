@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8080
+  - url: https://itis-4166-final-project-cle9.onrender.com
 
 components:
   securitySchemes:
