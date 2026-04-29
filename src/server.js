@@ -1,5 +1,6 @@
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
+import cors from "cors";
 import express from "express";
 import authRoutes from "./routes/authRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
@@ -9,6 +10,7 @@ import loanRoutes from "./routes/loanRoutes.js";
 const swaggerDocument = YAML.load("./src/swagger.yaml");
 
 const app = express();
+app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //middleware
