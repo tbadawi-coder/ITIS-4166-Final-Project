@@ -5,14 +5,19 @@ const prisma= new PrismaClient();
 
 async function main() {
 
+  //clear any existing data
+  await prisma.loan.deleteMany();
+  await prisma.bookAuthor.deleteMany();
+  await prisma.book.deleteMany();
+  await prisma.author.deleteMany();
+  await prisma.user.deleteMany();
+
   //hash password
   const password = await bcrypt.hash("Password123!", 10);
 
   //create users
-  const admin = await prisma.user.upsert({
-    where: { email: "admin@test.com" },
-    update: {},
-    create: {
+  const admin = await prisma.user.create({
+    data: {
       name: "Admin User",
       email: "admin@test.com",
       password,
@@ -20,10 +25,8 @@ async function main() {
     },
   });
 
-  const member = await prisma.user.upsert({
-    where: { email: "member@test.com" },
-    update: {},
-    create: {
+  const member = await prisma.user.create({
+    data: {
       name: "Member User",
       email: "member@test.com",
       password,
